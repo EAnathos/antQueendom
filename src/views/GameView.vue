@@ -6,6 +6,4 @@ import TheGame from '@/components/TheGame.vue'
   <TheGame />
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

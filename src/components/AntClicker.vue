@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const clicks = ref(0);
+const clicks = ref(0)
 
 const handleClick = () => {
-  clicks.value++;
-};
+  clicks.value++
+}
 </script>
 
 <template>

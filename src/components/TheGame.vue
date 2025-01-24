@@ -1,44 +1,44 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
-import AntClicker from './AntClicker.vue';
+import { ref, onMounted, onUnmounted } from 'vue'
+import AntClicker from './AntClicker.vue'
 
-const backgroundOffset = ref({ x: 0, y: 0 });
-const isDragging = ref(false);
-const dragStart = ref({ x: 0, y: 0 });
+const backgroundOffset = ref({ x: 0, y: 0 })
+const isDragging = ref(false)
+const dragStart = ref({ x: 0, y: 0 })
 
 const startDrag = (event: MouseEvent) => {
-  isDragging.value = true;
+  isDragging.value = true
   dragStart.value = {
     x: event.clientX - backgroundOffset.value.x,
     y: event.clientY - backgroundOffset.value.y,
-  };
-};
+  }
+}
 
 const drag = (event: MouseEvent) => {
   if (isDragging.value) {
-    backgroundOffset.value.x = event.clientX - dragStart.value.x;
-    backgroundOffset.value.y = event.clientY - dragStart.value.y;
+    backgroundOffset.value.x = event.clientX - dragStart.value.x
+    backgroundOffset.value.y = event.clientY - dragStart.value.y
   }
-};
+}
 
 const stopDrag = () => {
-  isDragging.value = false;
-};
+  isDragging.value = false
+}
 
 onMounted(() => {
   backgroundOffset.value = {
     x: -10240,
     y: -10240,
-  };
+  }
 
-  window.addEventListener('mousemove', drag);
-  window.addEventListener('mouseup', stopDrag);
-});
+  window.addEventListener('mousemove', drag)
+  window.addEventListener('mouseup', stopDrag)
+})
 
 onUnmounted(() => {
-  window.removeEventListener('mousemove', drag);
-  window.removeEventListener('mouseup', stopDrag);
-});
+  window.removeEventListener('mousemove', drag)
+  window.removeEventListener('mouseup', stopDrag)
+})
 </script>
 
 <template>
