@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
+import { useMushroomsStore } from '@/stores/mushroomsStore.ts';
 
-const mushrooms = ref(0);
+const mushroomsStore = useMushroomsStore();
 const mushroomRate = ref(1);
 const mushroomRateUpgradeCost = ref(50);
 
@@ -11,8 +12,6 @@ const mushroomEffectUpgradeCost = ref(100);
 const labUnlocked = ref(false);
 
 const loadFromLocalStorage = () => {
-  const savedMushrooms = localStorage.getItem('mushrooms');
-
   const savedMushroomRate = localStorage.getItem('mushroomRate');
   const savedMushroomRateUpgradeCost = localStorage.getItem('mushroomRateUpgradeCost');
 
@@ -20,8 +19,6 @@ const loadFromLocalStorage = () => {
   const savedMushroomEffectUpgradeCost = localStorage.getItem('mushroomEffectUpgradeCost');
 
   const savedLabUnlocked = localStorage.getItem('labUnlocked');
-
-  if (savedMushrooms) mushrooms.value = parseInt(savedMushrooms, 10);
 
   if (savedMushroomRate) mushroomRate.value = parseInt(savedMushroomRate, 10);
   if (savedMushroomRateUpgradeCost) mushroomRateUpgradeCost.value = parseInt(savedMushroomRateUpgradeCost, 10);
@@ -33,8 +30,6 @@ const loadFromLocalStorage = () => {
 };
 
 const saveToLocalStorage = () => {
-  localStorage.setItem('mushrooms', mushrooms.value.toString());
-
   localStorage.setItem('mushroomRate', mushroomRate.value.toString());
   localStorage.setItem('mushroomRateUpgradeCost', mushroomRateUpgradeCost.value.toString());
 
@@ -43,9 +38,9 @@ const saveToLocalStorage = () => {
 };
 
 const increaseMushroomRate = () => {
-  if (mushrooms.value >= mushroomRateUpgradeCost.value) {
+  if (mushroomsStore.mushrooms >= mushroomRateUpgradeCost.value) {
     mushroomRate.value++;
-    mushrooms.value -= mushroomRateUpgradeCost.value;
+    mushroomsStore.mushrooms -= mushroomRateUpgradeCost.value;
     mushroomRateUpgradeCost.value = Math.ceil(mushroomRateUpgradeCost.value * 1.2);
 
     saveToLocalStorage();
@@ -53,9 +48,9 @@ const increaseMushroomRate = () => {
 };
 
 const increaseMushroomEffect = () => {
-  if (mushrooms.value >= mushroomEffectUpgradeCost.value) {
+  if (mushroomsStore.mushrooms >= mushroomEffectUpgradeCost.value) {
     mushroomEffect.value++;
-    mushrooms.value -= mushroomEffectUpgradeCost.value;
+    mushroomsStore.mushrooms -= mushroomEffectUpgradeCost.value;
     mushroomEffectUpgradeCost.value = Math.ceil(mushroomEffectUpgradeCost.value * 1.2);
 
     saveToLocalStorage();
@@ -66,13 +61,13 @@ onMounted(() => {
   loadFromLocalStorage();
 
   setInterval(() => {
-    mushrooms.value += mushroomRate.value;
+    mushroomsStore.mushrooms += mushroomRate.value;
 
-    saveToLocalStorage();
+    mushroomsStore.saveToLocalStorage();
   }, 1000);
 });
 
-watch([mushrooms, mushroomRate, mushroomRateUpgradeCost, mushroomEffect, mushroomEffectUpgradeCost], saveToLocalStorage);
+watch([mushroomRate, mushroomRateUpgradeCost, mushroomEffect, mushroomEffectUpgradeCost], saveToLocalStorage);
 </script>
 
 <template>
@@ -81,16 +76,16 @@ watch([mushrooms, mushroomRate, mushroomRateUpgradeCost, mushroomEffect, mushroo
       <p>Laboratory</p>
     </div>
     <div class="game-panel">
-      <p class="resource-display">You have {{ mushrooms }} mushrooms</p>
+      <p class="resource-display">You have {{ mushroomsStore.mushrooms }} mushrooms</p>
       <p class="rate-display">(+{{ mushroomRate }} mushrooms/s)</p>
 
-      <button @click="increaseMushroomRate" :disabled="mushrooms < mushroomRateUpgradeCost">
+      <button @click="increaseMushroomRate" :disabled="mushroomsStore.mushrooms < mushroomRateUpgradeCost">
         <span>Increase Mushroom Rate</span>
         <span>Current : {{ mushroomRate }} mushrooms/s</span>
         <span>Cost : {{ mushroomRateUpgradeCost }} mushrooms</span>
       </button>
 
-      <button @click="increaseMushroomEffect" :disabled="mushrooms < mushroomEffectUpgradeCost">
+      <button @click="increaseMushroomEffect" :disabled="mushroomsStore.mushrooms < mushroomEffectUpgradeCost">
         <span>Increase Mushroom Effect</span>
         <span>Current : x{{ mushroomEffect }} leaves/s</span>
         <span>Cost : {{ mushroomEffectUpgradeCost }} mushrooms</span>
