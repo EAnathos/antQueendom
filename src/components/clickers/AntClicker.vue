@@ -3,7 +3,7 @@ import { ref, onMounted, watch, computed } from 'vue';
 import queenImage from '@/assets/queen.png';
 import { useMushroomsStore } from '@/stores/mushroomsStore.ts';
 
-const leaves = ref(1000);
+const leaves = ref(0);
 const workers = ref(0);
 const workerCost = ref(10);
 
