@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import AntClicker from './AntClicker.vue'
+import AntClicker from './clickers/AntClicker.vue'
+import LaboratoryClicker from '@/components/clickers/LaboratoryClicker.vue'
 
 const backgroundOffset = ref({ x: 0, y: 0 })
 const isDragging = ref(false)
@@ -71,7 +72,18 @@ onUnmounted(() => {
           position: 'absolute',
           top: '50%',
           left: '50%',
-          transform: 'translate(-50%, -50%)',
+          transform: 'translate(375px, -100px)',
+          zIndex: 3,
+        }"
+      />
+
+      <!-- Laboratory Clicker -->
+      <LaboratoryClicker
+        :style="{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(0px, 100px)',
           zIndex: 3,
         }"
       />
@@ -147,5 +159,11 @@ onUnmounted(() => {
   position: absolute;
   z-index: 2;
   opacity: 0.7;
+}
+
+/* Queen Image Styles */
+.queen {
+  width: 150px;
+  height: auto;
 }
 </style>

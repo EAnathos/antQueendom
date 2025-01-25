@@ -1,0 +1,67 @@
+.game-container {
+    margin: 0 auto;
+    padding: 15px;
+    background-color: #c0c0c0;
+    border: 2px solid black;
+    box-shadow: 4px 4px 0px black, -2px -2px 0px white inset;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.banner {
+    color: white;
+    text-align: center;
+    padding: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.game-panel {
+    background-color: #e0e0e0;
+    border: 2px solid black;
+    padding: 10px;
+    box-shadow: 2px 2px 0px black inset, -2px -2px 0px white inset;
+}
+
+.resource-display {
+    font-weight: bold;
+}
+
+.rate-display {
+    font-size: 12px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+button {
+    flex-direction: column;
+    display: flex;
+    font-family: inherit;
+    font-size: 14px;
+    padding: 5px 10px;
+    background-color: #d3d3d3;
+    border: 2px solid black;
+    color: black;
+    cursor: pointer;
+    box-shadow: 2px 2px 0px black, -1px -1px 0px white inset;
+    text-shadow: 1px 1px 0px white;
+    margin-bottom: 5px;
+    transition: background-color 0.2s ease;
+}
+
+button:hover {
+    background-color: #c0c0c0;
+}
+
+button:active {
+    box-shadow: 1px 1px 0px black inset;
+}
+
+button:disabled {
+    background-color: #aaa;
+    color: #666;
+    cursor: not-allowed;
+    box-shadow: none;
+}
