@@ -54,7 +54,7 @@ watch(workerCost, saveToLocalStorage);
         You have {{ antStore.leaves > 1000 ? Math.round(antStore.leaves) : antStore.leaves.toFixed(2) }} leaves
       </p>
       <p class="rate-display">
-        (+{{ antStore.leavesPerSecond > 1000 ? Math.round(antStore.leavesPerSecond) : antStore.leavesPerSecond.toFixed(2) }} leaves/s)
+        (+{{ antStore.leavesPerSecond > 100 ? Math.round(antStore.leavesPerSecond) : antStore.leavesPerSecond.toFixed(2) }} leaves/s)
       </p>
       <button @click="handleClick">Collect leaves</button>
       <button @click="recruitWorker" :disabled="antStore.leaves < workerCost">
