@@ -8,17 +8,17 @@ export const useCalculateSideEffectStore = defineStore('calculateSideEffect', ()
   const antStore = useAntStore()
 
   const leavesPerSecond = computed(() => {
-    let sideEffects =
-      laboratoryStore.mushrooms > 0
-        ? (1 + laboratoryStore.mushrooms / 100) * laboratoryStore.mushroomEffect
-        : 1 // Par défaut, l'effet est 1 si aucun champignon n'est présent.
+    let sideEffects = 1 * laboratoryStore.workerStrength
 
-    sideEffects = Math.log(sideEffects + 1)
+    if (laboratoryStore.mushrooms > 0) {
+      sideEffects = laboratoryStore.mushrooms / 100 * laboratoryStore.mushroomEffect
+      sideEffects = 1 + Math.log(sideEffects + 1)
+    }
 
     // Doublement si les media workers sont débloqués
     sideEffects = laboratoryStore.mediaWorkersUnlocked ? sideEffects * 2 : sideEffects
 
-    return antStore.workers * laboratoryStore.workerStrength * sideEffects
+    return antStore.workers * sideEffects
   })
 
 
