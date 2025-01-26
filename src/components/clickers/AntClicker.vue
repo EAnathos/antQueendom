@@ -1,47 +1,25 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
-import queenImage from '@/assets/queen.png';
-import { useLaboratoryStore } from '@/stores/laboratoryStore.ts';
+import { onMounted } from 'vue'
+import queenImage from '@/assets/queen.png'
+import { useLaboratoryStore } from '@/stores/laboratoryStore.ts'
 import { useUnlockedStepStore } from '@/stores/unlockedStepsStore.ts'
 import { useAntStore } from '@/stores/antStore.ts'
+import { useCalculateSideEffectStore } from '@/stores/helpers/calculateSideEffectsStore.ts'
 
-const workerCost = ref(10);
-
-const laboratoryStore = useLaboratoryStore();
-const antStore = useAntStore();
-const unlockedStepStore = useUnlockedStepStore();
-
-const loadFromLocalStorage = () => {
-  const savedWorkerCost = localStorage.getItem('workerCost');
-
-  if (savedWorkerCost) workerCost.value = parseInt(savedWorkerCost, 10);
-};
-
-const saveToLocalStorage = () => {
-  localStorage.setItem('workerCost', workerCost.value.toString());
-};
+const laboratoryStore = useLaboratoryStore()
+const antStore = useAntStore()
+const unlockedStepStore = useUnlockedStepStore()
+const calculateSideEffectStore = useCalculateSideEffectStore()
 
 const handleClick = () => {
-  antStore.leaves++;
-};
-
-const recruitWorker = () => {
-  if (antStore.leaves >= workerCost.value) {
-    antStore.workers++;
-    antStore.leaves -= workerCost.value;
-    workerCost.value = Math.ceil(workerCost.value * 1.2);
-    saveToLocalStorage();
-  }
-};
+  antStore.leaves++
+}
 
 onMounted(() => {
-  loadFromLocalStorage();
-  antStore.loadFromLocalStorage();
-  laboratoryStore.loadFromLocalStorage();
-  unlockedStepStore.loadFromLocalStorage();
-});
-
-watch(workerCost, saveToLocalStorage);
+  antStore.loadFromLocalStorage()
+  laboratoryStore.loadFromLocalStorage()
+  unlockedStepStore.loadFromLocalStorage()
+})
 </script>
 
 <template>
@@ -51,31 +29,45 @@ watch(workerCost, saveToLocalStorage);
     </div>
     <div class="game-panel">
       <p class="resource-display">
-        You have {{ antStore.leaves > 1000 ? Math.round(antStore.leaves) : antStore.leaves.toFixed(2) }} leaves
+        You have
+        {{
+          antStore.leaves > 1000000
+            ? antStore.leaves.toExponential(2)
+            : antStore.leaves > 1000
+              ? Math.round(antStore.leaves)
+              : antStore.leaves.toFixed(2)
+        }}
+        leaves
       </p>
       <p class="rate-display">
-        (+{{ antStore.leavesPerSecond > 100 ? Math.round(antStore.leavesPerSecond) : antStore.leavesPerSecond.toFixed(2) }} leaves/s)
+        (+{{
+          calculateSideEffectStore.leavesPerSecond > 100
+            ? Math.round(calculateSideEffectStore.leavesPerSecond)
+            : calculateSideEffectStore.leavesPerSecond.toFixed(2)
+        }}
+        leaves/s)
       </p>
       <button @click="handleClick">Collect leaves</button>
-      <button @click="recruitWorker" :disabled="antStore.leaves < workerCost">
-        Recruit Worker ({{ workerCost }} leaves)
+      <button @click="antStore.recruitWorker()" :disabled="antStore.leaves < antStore.workerCost">
+        Recruit Worker ({{ antStore.workerCost }} leaves)
         <span>Current : {{ antStore.workers }} workers</span>
       </button>
-      <button class="lab-button" @click="unlockedStepStore.unlockLab()" :disabled="antStore.leaves < 1000 || unlockedStepStore.labUnlocked">
+      <button
+        v-if="!unlockedStepStore.labUnlocked"
+        class="lab-button"
+        @click="unlockedStepStore.unlockLab()"
+        :disabled="antStore.leaves < 1000"
+      >
         Unlock Lab (1000 leaves)
       </button>
 
-      <img
-        :src="queenImage"
-        alt="Queen Ant"
-        class="queen-image"
-      />
+      <img :src="queenImage" alt="Queen Ant" class="queen-image" />
     </div>
   </div>
 </template>
 
 <style scoped>
-@import '../../assets/clickers.css';
+@import '../../assets/clicker.css';
 
 .game-container {
   width: 400px;

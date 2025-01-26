@@ -29,7 +29,8 @@ const stopDrag = () => {
 const resetAccount = () => {
   if (confirm('Are you sure you want to reset your account? This action cannot be undone.')) {
     localStorage.clear()
-    window.location.reload() // Recharge la page pour réinitialiser les valeurs
+
+    window.location.reload()
   }
 }
 
@@ -83,7 +84,7 @@ onUnmounted(() => {
           position: 'absolute',
           top: '50%',
           left: '50%',
-          transform: 'translate(0px, 100px)',
+          transform: 'translate(-50px, 100px)',
           zIndex: 3,
         }"
       />

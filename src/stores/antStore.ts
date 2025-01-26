@@ -1,45 +1,42 @@
 // stores/antStore.ts
-import { defineStore } from 'pinia';
-import { computed, ref } from 'vue'
-import { useLaboratoryStore } from '@/stores/laboratoryStore.ts'
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
 export const useAntStore = defineStore('ant', () => {
-  const leaves = ref(1000);
-  const workers = ref(0);
+  const leaves = ref(0)
 
-  const laboratoryStore = useLaboratoryStore();
-
-  const leavesPerSecond = computed(() => {
-    const mushroomEffect = laboratoryStore.mushrooms > 0
-      ? (1 + laboratoryStore.mushrooms / 100) * laboratoryStore.mushroomEffect
-      : 1; // Par défaut, l'effet est 1 si aucun champignon n'est présent.
-    return workers.value * mushroomEffect;
-  });
-
+  const workers = ref(0)
+  const workerCost = ref(10)
 
   // Load from localStorage
   const loadFromLocalStorage = () => {
-    const savedLeaves = localStorage.getItem('leaves');
-    const savedWorkers = localStorage.getItem('workers');
+    const savedLeaves = localStorage.getItem('leaves')
 
-    if (savedLeaves) leaves.value = parseInt(savedLeaves, 10);
-    if (savedWorkers) workers.value = parseInt(savedWorkers, 10);
-  };
+    const savedWorkers = localStorage.getItem('workers')
+    const savedWorkerCost = localStorage.getItem('workerCost')
+
+    if (savedLeaves) leaves.value = parseInt(savedLeaves, 10)
+
+    if (savedWorkers) workers.value = parseInt(savedWorkers, 10)
+    if (savedWorkerCost) workerCost.value = parseInt(savedWorkerCost, 10)
+  }
 
   // Save to localStorage
   const saveToLocalStorage = () => {
-    localStorage.setItem('leaves', leaves.value.toString());
-    localStorage.setItem('workers', workers.value.toString());
-  };
+    localStorage.setItem('leaves', leaves.value.toString())
 
-  // Increase leaves
-  const increaseLeaves = () => {
-    leaves.value += leavesPerSecond.value;
-    saveToLocalStorage();
-  };
+    localStorage.setItem('workers', workers.value.toString())
+    localStorage.setItem('workerCost', workerCost.value.toString())
+  }
 
-  // Start mushroom production at an interval
-  setInterval(increaseLeaves, 1000);
+  const recruitWorker = () => {
+    if (leaves.value >= workerCost.value) {
+      workers.value++
+      leaves.value -= workerCost.value
+      workerCost.value = Math.ceil(workerCost.value * 1.2)
+      saveToLocalStorage()
+    }
+  }
 
-  return { leaves, workers, leavesPerSecond, loadFromLocalStorage, saveToLocalStorage };
-});
+  return { leaves, workers, workerCost, loadFromLocalStorage, saveToLocalStorage, recruitWorker }
+})
