@@ -67,7 +67,6 @@ watch(
         :disabled="laboratoryStore.mushrooms < laboratoryStore.mushroomEffectUpgradeCost"
       >
         <span>Increase Mushroom Effect</span>
-        <span>Current : x{{ laboratoryStore.mushroomEffect.toFixed(2) }} leaves/s</span>
         <span>Cost : {{ laboratoryStore.mushroomEffectUpgradeCost.toFixed(2) }} mushrooms</span>
       </button>
 
