@@ -54,12 +54,21 @@ onMounted(() => {
       </button>
       <button
         v-if="!unlockedStepStore.labUnlocked"
-        class="lab-button"
+        class="unlock-button"
         @click="unlockedStepStore.unlockLab()"
         :disabled="antStore.leaves < 1000"
       >
         Unlock Lab (1000 leaves)
       </button>
+
+      <div v-else>
+        <button
+          class="unlock-button"
+        >
+          Unlock Offense and Defense (50000 leaves)
+        </button>
+      </div>
+
 
       <img :src="queenImage" alt="Queen Ant" class="queen-image" />
     </div>
@@ -70,14 +79,14 @@ onMounted(() => {
 @import '../../assets/clicker.css';
 
 .game-container {
-  width: 400px;
+  width: 500px;
 }
 
 .banner {
   background-color: #008000;
 }
 
-.lab-button {
+.unlock-button {
   margin-top: 15px;
 }
 
