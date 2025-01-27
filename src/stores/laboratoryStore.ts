@@ -1,17 +1,27 @@
-// stores/laboratoryStore.ts
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+
+const calculateUpgradeCost = (value: number, base: number, multiplier: number) => {
+  return Math.ceil(base * Math.pow(multiplier, value))
+}
 
 export const useLaboratoryStore = defineStore('laboratory', () => {
   const mushrooms = ref(0)
   const mushroomRate = ref(1)
-  const mushroomRateUpgradeCost = ref(20)
-
   const mushroomEffect = ref(1)
-  const mushroomEffectUpgradeCost = ref(100)
-
   const workerStrength = ref(1)
-  const workerStrengthUpgradeCost = ref(100)
+
+  const mushroomRateUpgradeCost = computed(() =>
+    calculateUpgradeCost(mushroomRate.value, 10, 1.2)
+  )
+
+  const mushroomEffectUpgradeCost = computed(() =>
+    calculateUpgradeCost(mushroomEffect.value, 100, 1.2)
+  )
+
+  const workerStrengthUpgradeCost = computed(() =>
+    calculateUpgradeCost(workerStrength.value, 100, 1.8)
+  )
 
   const mediaWorkersUnlocked = ref(false)
   const mediaWorkerCost = 500
@@ -23,24 +33,15 @@ export const useLaboratoryStore = defineStore('laboratory', () => {
   const loadFromLocalStorage = () => {
     const savedMushrooms = localStorage.getItem('mushrooms')
     const savedMushroomRate = localStorage.getItem('mushroomRate')
-    const savedMushroomRateUpgradeCost = localStorage.getItem('mushroomRateUpgradeCost')
     const savedMushroomEffect = localStorage.getItem('mushroomEffect')
-    const savedMushroomEffectUpgradeCost = localStorage.getItem('mushroomEffectUpgradeCost')
     const savedWorkerStrength = localStorage.getItem('workerStrength')
-    const savedWorkerStrengthUpgradeCost = localStorage.getItem('workerStrengthUpgradeCost')
     const savedMediaWorkersUnlocked = localStorage.getItem('mediaWorkersUnlocked')
     const savedMushroomWorkersUnlocked = localStorage.getItem('mushroomWorkersUnlocked')
 
     if (savedMushrooms) mushrooms.value = parseInt(savedMushrooms, 10)
     if (savedMushroomRate) mushroomRate.value = parseInt(savedMushroomRate, 10)
-    if (savedMushroomRateUpgradeCost)
-      mushroomRateUpgradeCost.value = parseInt(savedMushroomRateUpgradeCost, 10)
     if (savedMushroomEffect) mushroomEffect.value = parseInt(savedMushroomEffect, 10)
-    if (savedMushroomEffectUpgradeCost)
-      mushroomEffectUpgradeCost.value = parseInt(savedMushroomEffectUpgradeCost, 10)
     if (savedWorkerStrength) workerStrength.value = parseInt(savedWorkerStrength, 10)
-    if (savedWorkerStrengthUpgradeCost)
-      workerStrengthUpgradeCost.value = parseInt(savedWorkerStrengthUpgradeCost, 10)
     if (savedMediaWorkersUnlocked) mediaWorkersUnlocked.value = savedMediaWorkersUnlocked === 'true'
     if (savedMushroomWorkersUnlocked)
       mushroomWorkersUnlocked.value = savedMushroomWorkersUnlocked === 'true'
@@ -50,20 +51,16 @@ export const useLaboratoryStore = defineStore('laboratory', () => {
   const saveToLocalStorage = () => {
     localStorage.setItem('mushrooms', mushrooms.value.toString())
     localStorage.setItem('mushroomRate', mushroomRate.value.toString())
-    localStorage.setItem('mushroomRateUpgradeCost', mushroomRateUpgradeCost.value.toString())
     localStorage.setItem('mushroomEffect', mushroomEffect.value.toString())
-    localStorage.setItem('mushroomEffectUpgradeCost', mushroomEffectUpgradeCost.value.toString())
     localStorage.setItem('workerStrength', workerStrength.value.toString())
-    localStorage.setItem('workerStrengthUpgradeCost', workerStrengthUpgradeCost.value.toString())
     localStorage.setItem('mediaWorkersUnlocked', mediaWorkersUnlocked.value.toString())
     localStorage.setItem('mushroomWorkersUnlocked', mushroomWorkersUnlocked.value.toString())
   }
 
   const increaseMushroomRate = () => {
     if (mushrooms.value >= mushroomRateUpgradeCost.value) {
-      mushroomRate.value++
       mushrooms.value -= mushroomRateUpgradeCost.value
-      mushroomRateUpgradeCost.value = Math.ceil(mushroomRateUpgradeCost.value * 1.2)
+      mushroomRate.value++
 
       saveToLocalStorage()
     }
@@ -71,9 +68,8 @@ export const useLaboratoryStore = defineStore('laboratory', () => {
 
   const increaseMushroomEffect = () => {
     if (mushrooms.value >= mushroomEffectUpgradeCost.value) {
-      mushroomEffect.value *= 1.05
       mushrooms.value -= mushroomEffectUpgradeCost.value
-      mushroomEffectUpgradeCost.value *= 1.2
+      mushroomEffect.value *= 1.05
 
       saveToLocalStorage()
     }
@@ -83,7 +79,6 @@ export const useLaboratoryStore = defineStore('laboratory', () => {
     if (mushrooms.value >= workerStrengthUpgradeCost.value) {
       mushrooms.value -= workerStrengthUpgradeCost.value
       workerStrength.value *= 1.4
-      workerStrengthUpgradeCost.value *= 1.8
       saveToLocalStorage()
     }
   }

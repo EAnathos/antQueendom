@@ -28,8 +28,8 @@ export const useAntStore = defineStore('ant', () => {
 
   const recruitWorker = () => {
     if (leaves.value >= workerCost.value) {
-      workers.value++
       leaves.value -= workerCost.value
+      workers.value++
       saveToLocalStorage()
     }
   }
@@ -40,6 +40,6 @@ export const useAntStore = defineStore('ant', () => {
     workerCost,
     loadFromLocalStorage,
     saveToLocalStorage,
-    recruitWorker
+    recruitWorker,
   }
 })

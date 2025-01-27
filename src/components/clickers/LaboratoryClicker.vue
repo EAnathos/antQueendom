@@ -38,9 +38,7 @@ const toggleInfoPopup = () => {
   <div v-if="unlockedStepStore.labUnlocked" class="game-container">
     <div class="banner">
       <p>Laboratory</p>
-      <button class="info-button" @click="toggleInfoPopup">
-        i
-      </button>
+      <button class="info-button" @click="toggleInfoPopup">i</button>
     </div>
 
     <!-- Popup -->
