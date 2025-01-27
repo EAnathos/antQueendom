@@ -5,7 +5,10 @@ import { useAntStore } from '@/stores/antStore.ts'
 
 export const useUnlockedStepStore = defineStore('unlockedSteps', () => {
   const labUnlocked = ref(false)
+  const labPrice = 500
+
   const offenseAndDefenseUnlocked = ref(false)
+  const offenseAndDefensePrice = 50000
 
   const antStore = useAntStore()
 
@@ -27,18 +30,18 @@ export const useUnlockedStepStore = defineStore('unlockedSteps', () => {
 
   // Unlock the laboratory
   const unlockLab = () => {
-    if (antStore.leaves >= 1000) {
+    if (antStore.leaves >= labPrice) {
       labUnlocked.value = true
-      antStore.leaves -= 1000
+      antStore.leaves -= labPrice
 
       saveToLocalStorage()
     }
   }
 
   const unlockOffenseAndDefense = () => {
-    if (antStore.leaves >= 50000) {
+    if (antStore.leaves >= offenseAndDefensePrice) {
       offenseAndDefenseUnlocked.value = true
-      antStore.leaves -= 50000
+      antStore.leaves -= offenseAndDefensePrice
 
       saveToLocalStorage()
     }
@@ -46,7 +49,9 @@ export const useUnlockedStepStore = defineStore('unlockedSteps', () => {
 
   return {
     labUnlocked,
+    labPrice,
     offenseAndDefenseUnlocked,
+    offenseAndDefensePrice,
     unlockLab,
     unlockOffenseAndDefense,
     loadFromLocalStorage,

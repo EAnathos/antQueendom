@@ -56,9 +56,9 @@ onMounted(() => {
         v-if="!unlockedStepStore.labUnlocked"
         class="unlock-button"
         @click="unlockedStepStore.unlockLab()"
-        :disabled="antStore.leaves < 1000"
+        :disabled="antStore.leaves < unlockedStepStore.labPrice"
       >
-        Unlock Lab (1000 leaves)
+        Unlock Lab ({{ unlockedStepStore.labPrice }} leaves)
       </button>
 
       <div v-else>
@@ -66,9 +66,9 @@ onMounted(() => {
           v-if="!unlockedStepStore.offenseAndDefenseUnlocked"
           class="unlock-button"
           @click="unlockedStepStore.unlockOffenseAndDefense()"
-          :disabled="antStore.leaves < 50000"
+          :disabled="antStore.leaves < unlockedStepStore.offenseAndDefensePrice"
         >
-          Unlock Offense and Defense (50000 leaves)
+          Unlock Offense and Defense ({{ unlockedStepStore.offenseAndDefensePrice }} leaves)
         </button>
       </div>
 

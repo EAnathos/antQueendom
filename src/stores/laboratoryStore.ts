@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-
-const calculateUpgradeCost = (value: number, base: number, multiplier: number) => {
-  return Math.ceil(base * Math.pow(multiplier, value))
-}
+import {
+  calculateLevel,
+  calculateUpgradeCost
+} from '@/stores/utils/costPrice.ts'
 
 export const useLaboratoryStore = defineStore('laboratory', () => {
   const mushrooms = ref(0)
@@ -11,16 +11,16 @@ export const useLaboratoryStore = defineStore('laboratory', () => {
   const mushroomEffect = ref(1)
   const workerStrength = ref(1)
 
-  const mushroomRateUpgradeCost = computed(() =>
-    calculateUpgradeCost(mushroomRate.value, 10, 1.2)
-  )
+  const mushroomRateUpgradeCost = computed(() => {
+    return calculateUpgradeCost(10, 1.2, mushroomRate.value)
+  })
 
   const mushroomEffectUpgradeCost = computed(() =>
-    calculateUpgradeCost(mushroomEffect.value, 100, 1.2)
+    calculateUpgradeCost(100, 1.2, calculateLevel(mushroomEffect.value, 1.05) + 1)
   )
 
   const workerStrengthUpgradeCost = computed(() =>
-    calculateUpgradeCost(workerStrength.value, 100, 1.8)
+    calculateUpgradeCost(100, 1.8, calculateLevel(workerStrength.value, 1.4) + 1)
   )
 
   const mediaWorkersUnlocked = ref(false)
@@ -38,10 +38,10 @@ export const useLaboratoryStore = defineStore('laboratory', () => {
     const savedMediaWorkersUnlocked = localStorage.getItem('mediaWorkersUnlocked')
     const savedMushroomWorkersUnlocked = localStorage.getItem('mushroomWorkersUnlocked')
 
-    if (savedMushrooms) mushrooms.value = parseInt(savedMushrooms, 10)
-    if (savedMushroomRate) mushroomRate.value = parseInt(savedMushroomRate, 10)
-    if (savedMushroomEffect) mushroomEffect.value = parseInt(savedMushroomEffect, 10)
-    if (savedWorkerStrength) workerStrength.value = parseInt(savedWorkerStrength, 10)
+    if (savedMushrooms) mushrooms.value = parseInt(savedMushrooms)
+    if (savedMushroomRate) mushroomRate.value = parseInt(savedMushroomRate)
+    if (savedMushroomEffect) mushroomEffect.value = parseFloat(savedMushroomEffect)
+    if (savedWorkerStrength) workerStrength.value = parseFloat(savedWorkerStrength)
     if (savedMediaWorkersUnlocked) mediaWorkersUnlocked.value = savedMediaWorkersUnlocked === 'true'
     if (savedMushroomWorkersUnlocked)
       mushroomWorkersUnlocked.value = savedMushroomWorkersUnlocked === 'true'

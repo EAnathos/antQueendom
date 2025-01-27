@@ -16,8 +16,8 @@ export const useAntStore = defineStore('ant', () => {
     const savedLeaves = localStorage.getItem('leaves')
     const savedWorkers = localStorage.getItem('workers')
 
-    if (savedLeaves) leaves.value = parseInt(savedLeaves, 10)
-    if (savedWorkers) workers.value = parseInt(savedWorkers, 10)
+    if (savedLeaves) leaves.value = parseInt(savedLeaves)
+    if (savedWorkers) workers.value = parseInt(savedWorkers)
   }
 
   // Sauvegarder dans le localStorage
