@@ -4,11 +4,14 @@ import { ref, computed } from 'vue'
 
 export const useAntStore = defineStore('ant', () => {
   const leaves = ref(0)
+
   const workers = ref(0)
+  const workerBasePrice = 10
+  const workerPriceMultiplier = 1.2
 
   // Coût des ouvrières comme propriété calculée
   const workerCost = computed(() => {
-    return Math.ceil(10 * Math.pow(1.2, workers.value))
+    return Math.ceil(workerBasePrice * Math.pow(workerPriceMultiplier, workers.value))
   })
 
   // Charger depuis le localStorage
