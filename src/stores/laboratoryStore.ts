@@ -1,26 +1,39 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import {
-  calculateLevel,
-  calculateUpgradeCost
-} from './utils/costPrice.ts'
+import { calculateLevel, calculateUpgradeCost } from './utils/costPrice.ts'
 
 export const useLaboratoryStore = defineStore('laboratory', () => {
   const mushrooms = ref(0)
+
   const mushroomRate = ref(1)
+  const mushroomRatePriceMultiplier = 1.2
+
   const mushroomEffect = ref(1)
+  const mushroomEffectPriceMultiplier = 1.2
+  const mushroomEffectValueMultiplier = 1.05
+
   const workerStrength = ref(1)
+  const workerStrengthPriceMultiplier = 1.8
+  const workerStrengthValueMultiplier = 1.4
 
   const mushroomRateUpgradeCost = computed(() => {
-    return calculateUpgradeCost(10, 1.2, mushroomRate.value)
+    return calculateUpgradeCost(10, mushroomRatePriceMultiplier, mushroomRate.value)
   })
 
   const mushroomEffectUpgradeCost = computed(() =>
-    calculateUpgradeCost(100, 1.2, calculateLevel(mushroomEffect.value, 1.05) + 1)
+    calculateUpgradeCost(
+      100,
+      mushroomEffectPriceMultiplier,
+      calculateLevel(mushroomEffect.value, mushroomEffectValueMultiplier) + 1,
+    ),
   )
 
   const workerStrengthUpgradeCost = computed(() =>
-    calculateUpgradeCost(100, 1.8, calculateLevel(workerStrength.value, 1.4) + 1)
+    calculateUpgradeCost(
+      100,
+      workerStrengthPriceMultiplier,
+      calculateLevel(workerStrength.value, workerStrengthValueMultiplier) + 1,
+    ),
   )
 
   const mediaWorkersUnlocked = ref(false)
@@ -69,7 +82,7 @@ export const useLaboratoryStore = defineStore('laboratory', () => {
   const increaseMushroomEffect = () => {
     if (mushrooms.value >= mushroomEffectUpgradeCost.value) {
       mushrooms.value -= mushroomEffectUpgradeCost.value
-      mushroomEffect.value *= 1.05
+      mushroomEffect.value *= mushroomEffectValueMultiplier
 
       saveToLocalStorage()
     }
@@ -78,7 +91,7 @@ export const useLaboratoryStore = defineStore('laboratory', () => {
   const increaseWorkerStrength = () => {
     if (mushrooms.value >= workerStrengthUpgradeCost.value) {
       mushrooms.value -= workerStrengthUpgradeCost.value
-      workerStrength.value *= 1.4
+      workerStrength.value *= workerStrengthValueMultiplier
       saveToLocalStorage()
     }
   }
