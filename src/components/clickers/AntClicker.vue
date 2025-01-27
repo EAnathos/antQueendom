@@ -72,7 +72,6 @@ onMounted(() => {
         </button>
       </div>
 
-
       <img :src="queenImage" alt="Queen Ant" class="queen-image" />
     </div>
   </div>

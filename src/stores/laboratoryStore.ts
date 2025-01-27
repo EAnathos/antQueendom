@@ -33,11 +33,14 @@ export const useLaboratoryStore = defineStore('laboratory', () => {
 
     if (savedMushrooms) mushrooms.value = parseInt(savedMushrooms, 10)
     if (savedMushroomRate) mushroomRate.value = parseInt(savedMushroomRate, 10)
-    if (savedMushroomRateUpgradeCost) mushroomRateUpgradeCost.value = parseInt(savedMushroomRateUpgradeCost, 10)
+    if (savedMushroomRateUpgradeCost)
+      mushroomRateUpgradeCost.value = parseInt(savedMushroomRateUpgradeCost, 10)
     if (savedMushroomEffect) mushroomEffect.value = parseInt(savedMushroomEffect, 10)
-    if (savedMushroomEffectUpgradeCost) mushroomEffectUpgradeCost.value = parseInt(savedMushroomEffectUpgradeCost, 10)
+    if (savedMushroomEffectUpgradeCost)
+      mushroomEffectUpgradeCost.value = parseInt(savedMushroomEffectUpgradeCost, 10)
     if (savedWorkerStrength) workerStrength.value = parseInt(savedWorkerStrength, 10)
-    if (savedWorkerStrengthUpgradeCost) workerStrengthUpgradeCost.value = parseInt(savedWorkerStrengthUpgradeCost, 10)
+    if (savedWorkerStrengthUpgradeCost)
+      workerStrengthUpgradeCost.value = parseInt(savedWorkerStrengthUpgradeCost, 10)
     if (savedMediaWorkersUnlocked) mediaWorkersUnlocked.value = savedMediaWorkersUnlocked === 'true'
     if (savedMushroomWorkersUnlocked)
       mushroomWorkersUnlocked.value = savedMushroomWorkersUnlocked === 'true'
@@ -70,7 +73,7 @@ export const useLaboratoryStore = defineStore('laboratory', () => {
     if (mushrooms.value >= mushroomEffectUpgradeCost.value) {
       mushroomEffect.value *= 1.05
       mushrooms.value -= mushroomEffectUpgradeCost.value
-      mushroomEffectUpgradeCost.value *= 1.20
+      mushroomEffectUpgradeCost.value *= 1.2
 
       saveToLocalStorage()
     }
@@ -79,7 +82,7 @@ export const useLaboratoryStore = defineStore('laboratory', () => {
   const increaseWorkerStrength = () => {
     if (mushrooms.value >= workerStrengthUpgradeCost.value) {
       mushrooms.value -= workerStrengthUpgradeCost.value
-      workerStrength.value *= 1.40
+      workerStrength.value *= 1.4
       workerStrengthUpgradeCost.value *= 1.8
       saveToLocalStorage()
     }

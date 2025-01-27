@@ -11,7 +11,7 @@ export const useCalculateSideEffectStore = defineStore('calculateSideEffect', ()
     let sideEffects = 1 * laboratoryStore.workerStrength
 
     if (laboratoryStore.mushrooms > 0) {
-      sideEffects = laboratoryStore.mushrooms / 100 * laboratoryStore.mushroomEffect
+      sideEffects = (laboratoryStore.mushrooms / 100) * laboratoryStore.mushroomEffect
       sideEffects = 1 + Math.log(sideEffects + 1)
     }
 
@@ -20,7 +20,6 @@ export const useCalculateSideEffectStore = defineStore('calculateSideEffect', ()
 
     return antStore.workers * sideEffects
   })
-
 
   // Increase leaves
   const increaseLeaves = () => {
@@ -36,7 +35,7 @@ export const useCalculateSideEffectStore = defineStore('calculateSideEffect', ()
     const b = 0.1
 
     let sideEffects = laboratoryStore.mushroomWorkersUnlocked ? antStore.leaves / 5000 : 0
-    sideEffects = 1 + (a * Math.log(sideEffects + 1)) + (b * sideEffects)
+    sideEffects = 1 + a * Math.log(sideEffects + 1) + b * sideEffects
 
     return laboratoryStore.mushroomRate * sideEffects
   })

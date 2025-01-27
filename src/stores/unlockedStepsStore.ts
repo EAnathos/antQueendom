@@ -15,7 +15,8 @@ export const useUnlockedStepStore = defineStore('unlockedSteps', () => {
     const savedOffenseAndDefenseUnlocked = localStorage.getItem('offenseAndDefenseUnlocked')
 
     if (savedLabUnlocked) labUnlocked.value = savedLabUnlocked === 'true'
-    if (savedOffenseAndDefenseUnlocked) offenseAndDefenseUnlocked.value = savedOffenseAndDefenseUnlocked === 'true'
+    if (savedOffenseAndDefenseUnlocked)
+      offenseAndDefenseUnlocked.value = savedOffenseAndDefenseUnlocked === 'true'
   }
 
   // Save to localStorage
@@ -40,8 +41,15 @@ export const useUnlockedStepStore = defineStore('unlockedSteps', () => {
       antStore.leaves -= 50000
 
       saveToLocalStorage()
-      }
+    }
   }
 
-  return { labUnlocked, offenseAndDefenseUnlocked, unlockLab, unlockOffenseAndDefense, loadFromLocalStorage, saveToLocalStorage }
+  return {
+    labUnlocked,
+    offenseAndDefenseUnlocked,
+    unlockLab,
+    unlockOffenseAndDefense,
+    loadFromLocalStorage,
+    saveToLocalStorage,
+  }
 })

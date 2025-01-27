@@ -1,42 +1,45 @@
 // stores/antStore.ts
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 export const useAntStore = defineStore('ant', () => {
   const leaves = ref(0)
-
   const workers = ref(0)
-  const workerCost = ref(10)
 
-  // Load from localStorage
+  // Coût des ouvrières comme propriété calculée
+  const workerCost = computed(() => {
+    return Math.ceil(10 * Math.pow(1.2, workers.value))
+  })
+
+  // Charger depuis le localStorage
   const loadFromLocalStorage = () => {
     const savedLeaves = localStorage.getItem('leaves')
-
     const savedWorkers = localStorage.getItem('workers')
-    const savedWorkerCost = localStorage.getItem('workerCost')
 
     if (savedLeaves) leaves.value = parseInt(savedLeaves, 10)
-
     if (savedWorkers) workers.value = parseInt(savedWorkers, 10)
-    if (savedWorkerCost) workerCost.value = parseInt(savedWorkerCost, 10)
   }
 
-  // Save to localStorage
+  // Sauvegarder dans le localStorage
   const saveToLocalStorage = () => {
     localStorage.setItem('leaves', leaves.value.toString())
-
     localStorage.setItem('workers', workers.value.toString())
-    localStorage.setItem('workerCost', workerCost.value.toString())
   }
 
   const recruitWorker = () => {
     if (leaves.value >= workerCost.value) {
       workers.value++
       leaves.value -= workerCost.value
-      workerCost.value = Math.ceil(workerCost.value * 1.2)
       saveToLocalStorage()
     }
   }
 
-  return { leaves, workers, workerCost, loadFromLocalStorage, saveToLocalStorage, recruitWorker }
+  return {
+    leaves,
+    workers,
+    workerCost,
+    loadFromLocalStorage,
+    saveToLocalStorage,
+    recruitWorker
+  }
 })
