@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { onMounted, watch } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useLaboratoryStore } from '@/stores/laboratoryStore.ts'
 import { useUnlockedStepStore } from '@/stores/unlockedStepsStore.ts'
 import { useCalculateSideEffectStore } from '@/stores/helpers/calculateSideEffectsStore.ts'
 
 const laboratoryStore = useLaboratoryStore()
 const unlockedStepStore = useUnlockedStepStore()
-
 const calculateSideEffectStore = useCalculateSideEffectStore()
+
+const isInfoPopupVisible = ref(false)
 
 onMounted(() => {
   laboratoryStore.loadFromLocalStorage()
@@ -27,13 +28,29 @@ watch(
     }
   },
 )
+
+const toggleInfoPopup = () => {
+  isInfoPopupVisible.value = !isInfoPopupVisible.value
+}
 </script>
 
 <template>
   <div v-if="unlockedStepStore.labUnlocked" class="game-container">
     <div class="banner">
       <p>Laboratory</p>
+      <button class="info-button" @click="toggleInfoPopup">i</button>
     </div>
+
+    <!-- Popup -->
+    <div v-if="isInfoPopupVisible" class="info-popup">
+      <div class="popup-content">
+        <p>Welcome to the laboratory!</p>
+        <p>Here you can upgrade your mushroom production.</p>
+        <p>Mushrooms increase your leaf production.</p>
+        <button @click="toggleInfoPopup">Close</button>
+      </div>
+    </div>
+
     <div class="game-panel">
       <p class="resource-display">
         You have

@@ -9,9 +9,7 @@ const unlockedStepStore = useUnlockedStepStore()
     <div class="banner">
       <p>Defense</p>
     </div>
-    <div class="game-panel">
-
-    </div>
+    <div class="game-panel"></div>
   </div>
 </template>
 
