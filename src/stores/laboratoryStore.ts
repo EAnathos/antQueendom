@@ -3,7 +3,7 @@ import { computed, ref } from 'vue'
 import {
   calculateLevel,
   calculateUpgradeCost
-} from '@/stores/utils/costPrice.ts'
+} from './utils/costPrice.ts'
 
 export const useLaboratoryStore = defineStore('laboratory', () => {
   const mushrooms = ref(0)
