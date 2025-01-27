@@ -32,8 +32,11 @@ export const useCalculateSideEffectStore = defineStore('calculateSideEffect', ()
   setInterval(increaseLeaves, 1000)
 
   const mushroomsPerSecond = computed(() => {
-    let sideEffects = laboratoryStore.mushroomWorkersUnlocked ? antStore.leaves / 50000 : 0
-    sideEffects = 1 + Math.log(sideEffects + 1)
+    const a = 0.5
+    const b = 0.1
+
+    let sideEffects = laboratoryStore.mushroomWorkersUnlocked ? antStore.leaves / 5000 : 0
+    sideEffects = 1 + (a * Math.log(sideEffects + 1)) + (b * sideEffects)
 
     return laboratoryStore.mushroomRate * sideEffects
   })

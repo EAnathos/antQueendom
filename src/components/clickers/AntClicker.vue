@@ -66,9 +66,9 @@ onMounted(() => {
           v-if="!unlockedStepStore.offenseAndDefenseUnlocked"
           class="unlock-button"
           @click="unlockedStepStore.unlockOffenseAndDefense()"
-          :disabled="antStore.leaves < 500000"
+          :disabled="antStore.leaves < 50000"
         >
-          Unlock Offense and Defense (500000 leaves)
+          Unlock Offense and Defense (50000 leaves)
         </button>
       </div>
 

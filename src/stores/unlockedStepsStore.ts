@@ -35,9 +35,9 @@ export const useUnlockedStepStore = defineStore('unlockedSteps', () => {
   }
 
   const unlockOffenseAndDefense = () => {
-    if (antStore.leaves >= 500000) {
+    if (antStore.leaves >= 50000) {
       offenseAndDefenseUnlocked.value = true
-      antStore.leaves -= 500000
+      antStore.leaves -= 50000
 
       saveToLocalStorage()
       }
