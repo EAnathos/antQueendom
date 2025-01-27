@@ -2,6 +2,8 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import AntClicker from './clickers/AntClicker.vue'
 import LaboratoryClicker from '@/components/clickers/LaboratoryClicker.vue'
+import OffenseClicker from '@/components/clickers/OffenseClicker.vue'
+import DefenseClicker from '@/components/clickers/DefenseClicker.vue'
 
 const backgroundOffset = ref({ x: 0, y: 0 })
 const isDragging = ref(false)
@@ -84,7 +86,27 @@ onUnmounted(() => {
           position: 'absolute',
           top: '50%',
           left: '50%',
-          transform: 'translate(-50px, 100px)',
+          transform: 'translate(-50px, 50px)',
+          zIndex: 3,
+        }"
+      />
+
+      <OffenseClicker
+        :style="{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(200px, -250px)',
+          zIndex: 3,
+        }"
+      />
+
+      <DefenseClicker
+        :style="{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(700px, -250px)',
           zIndex: 3,
         }"
       />
