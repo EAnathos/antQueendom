@@ -2,6 +2,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { calculateUpgradeCost } from '@/stores/utils/costPrice.ts'
+import { useAchievementsStore } from '@/stores/achievementsStore.ts' // Import du store des achievements
 
 export const useAntStore = defineStore('ant', () => {
   const leaves = ref(0)
@@ -10,12 +11,10 @@ export const useAntStore = defineStore('ant', () => {
   const workerBasePrice = 10
   const workerPriceMultiplier = 1.2
 
-  // Coût des ouvrières comme propriété calculée
   const workerCost = computed(() => {
     return calculateUpgradeCost(workerBasePrice, workerPriceMultiplier, workers.value)
   })
 
-  // Charger depuis le localStorage
   const loadFromLocalStorage = () => {
     const savedLeaves = localStorage.getItem('leaves')
     const savedWorkers = localStorage.getItem('workers')
@@ -24,7 +23,6 @@ export const useAntStore = defineStore('ant', () => {
     if (savedWorkers) workers.value = parseInt(savedWorkers)
   }
 
-  // Sauvegarder dans le localStorage
   const saveToLocalStorage = () => {
     localStorage.setItem('leaves', leaves.value.toString())
     localStorage.setItem('workers', workers.value.toString())
@@ -34,7 +32,30 @@ export const useAntStore = defineStore('ant', () => {
     if (leaves.value >= workerCost.value) {
       leaves.value -= workerCost.value
       workers.value++
+      checkAchievements()
       saveToLocalStorage()
+    }
+  }
+
+  const checkAchievements = () => {
+    const achievementsStore = useAchievementsStore()
+
+    switch (workers.value) {
+      case 1:
+        achievementsStore.unlockAchievement('First steps')
+        break
+      case 100:
+        achievementsStore.unlockAchievement('Growing team')
+        break
+      case 10000:
+        achievementsStore.unlockAchievement('Ants are coming')
+        break
+      case 1000000:
+        achievementsStore.unlockAchievement('Ants are here')
+        break
+      case 100000000:
+        achievementsStore.unlockAchievement('Ants are legion')
+        break
     }
   }
 

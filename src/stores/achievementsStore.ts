@@ -7,34 +7,34 @@ export const useAchievementsStore = defineStore('achievements', () => {
     {
       name: 'First steps',
       description: 'Recruit your first worker',
-      unlocked: true,
+      unlocked: false,
       theme: 'Workers',
       tier: 'I',
     },
     {
       name: 'Growing team',
-      description: 'Recruit 10 workers',
+      description: 'Recruit 100 workers',
       unlocked: false,
       theme: 'Workers',
       tier: 'II',
     },
     {
       name: 'Ants are coming',
-      description: 'Recruit 100 workers',
+      description: 'Recruit 10000 workers',
       unlocked: false,
       theme: 'Workers',
       tier: 'III',
     },
     {
       name: 'Ants are here',
-      description: 'Recruit 1000 workers',
+      description: 'Recruit 1000000 workers',
       unlocked: false,
       theme: 'Workers',
       tier: 'IV',
     },
     {
       name: 'Ants are legion',
-      description: 'Recruit 10000 workers',
+      description: 'Recruit 100000000 workers',
       unlocked: false,
       theme: 'Workers',
       tier: 'V',
@@ -75,7 +75,7 @@ export const useAchievementsStore = defineStore('achievements', () => {
       theme: 'Mushrooms',
       tier: 'V',
     },
-  ]);
+  ])
 
   // Load from localStorage
   const loadFromLocalStorage = () => {
@@ -91,9 +91,19 @@ export const useAchievementsStore = defineStore('achievements', () => {
     localStorage.setItem('achievements', JSON.stringify(achievements.value))
   }
 
+  // Unlock an achievement by its name
+  const unlockAchievement = (achievementName: string) => {
+    const achievement = achievements.value.find(ach => ach.name === achievementName)
+    if (achievement && !achievement.unlocked) {
+      achievement.unlocked = true
+      saveToLocalStorage() // Save changes to localStorage after unlocking
+    }
+  }
+
   return {
     achievements,
     loadFromLocalStorage,
     saveToLocalStorage,
+    unlockAchievement, // Expose the unlock function
   }
 })
