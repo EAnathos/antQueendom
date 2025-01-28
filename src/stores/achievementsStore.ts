@@ -3,6 +3,11 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useAchievementsStore = defineStore('achievements', () => {
+  const thresholds = ref({
+    workers: [1, 100, 10000, 1000000, 100000000],
+    mushrooms: [1, 10000, 1000000000, 1000000000000, 1000000000000000],
+  })
+
   const achievements = ref([
     {
       name: 'First steps',
@@ -13,28 +18,28 @@ export const useAchievementsStore = defineStore('achievements', () => {
     },
     {
       name: 'Growing team',
-      description: 'Recruit 100 workers',
+      description: 'Recruit' + thresholds.value.workers[1] + 'workers',
       unlocked: false,
       theme: 'Workers',
       tier: 'II',
     },
     {
       name: 'Ants are coming',
-      description: 'Recruit 10000 workers',
+      description: 'Recruit' + thresholds.value.workers[2] + 'workers',
       unlocked: false,
       theme: 'Workers',
       tier: 'III',
     },
     {
       name: 'Ants are here',
-      description: 'Recruit 1000000 workers',
+      description: 'Recruit' + thresholds.value.workers[3] + 'workers',
       unlocked: false,
       theme: 'Workers',
       tier: 'IV',
     },
     {
       name: 'Ants are legion',
-      description: 'Recruit 100000000 workers',
+      description: 'Recruit' + thresholds.value.workers[4] + 'workers',
       unlocked: false,
       theme: 'Workers',
       tier: 'V',
@@ -49,28 +54,28 @@ export const useAchievementsStore = defineStore('achievements', () => {
     },
     {
       name: 'Mushroom gatherer',
-      description: 'Collect 100 mushrooms',
+      description: 'Collect' + thresholds.value.mushrooms[1] + 'mushrooms',
       unlocked: false,
       theme: 'Mushrooms',
       tier: 'II',
     },
     {
       name: 'Mushroom farmer',
-      description: 'Collect 1000 mushrooms',
+      description: 'Collect' + thresholds.value.mushrooms[2] + 'mushrooms',
       unlocked: false,
       theme: 'Mushrooms',
       tier: 'III',
     },
     {
       name: 'Mushroom master',
-      description: 'Collect 10000 mushrooms',
+      description: 'Collect' + thresholds.value.mushrooms[3] + 'mushrooms',
       unlocked: false,
       theme: 'Mushrooms',
       tier: 'IV',
     },
     {
       name: 'Mycologist',
-      description: 'Collect 100000 mushrooms',
+      description: 'Collect' + thresholds.value.mushrooms[4] + 'mushrooms',
       unlocked: false,
       theme: 'Mushrooms',
       tier: 'V',
@@ -102,6 +107,7 @@ export const useAchievementsStore = defineStore('achievements', () => {
 
   return {
     achievements,
+    thresholds,
     loadFromLocalStorage,
     saveToLocalStorage,
     unlockAchievement,

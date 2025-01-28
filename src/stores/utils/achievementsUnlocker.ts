@@ -1,48 +1,58 @@
 import { useAchievementsStore } from '@/stores/achievementsStore.ts'
 
-const workersThresholds = [1, 100, 10000, 1000000, 100000000]
-const mushroomsThresholds = [1, 100, 1000, 10000, 100000]
-
 export const checkWorkersAchievements = (workers: number) => {
   const achievementsStore = useAchievementsStore()
+  const thresholds = achievementsStore.thresholds
 
-  switch (workers) {
-    case workersThresholds[0]:
-      achievementsStore.unlockAchievement('First steps')
-      break
-    case workersThresholds[1]:
-      achievementsStore.unlockAchievement('Growing team')
-      break
-    case workersThresholds[2]:
-      achievementsStore.unlockAchievement('Ants are coming')
-      break
-    case workersThresholds[3]:
-      achievementsStore.unlockAchievement('Ants are here')
-      break
-    case workersThresholds[4]:
-      achievementsStore.unlockAchievement('Ants are legion')
-      break
+  for (let i = 0; i < thresholds.workers.length; i++) {
+    if (workers >= thresholds.workers[i]) {
+      const achievement = getWorkerAchievement(i)
+      achievementsStore.unlockAchievement(achievement)
+    }
+  }
+}
+
+const getWorkerAchievement = (index: number) => {
+  switch (index) {
+    case 0:
+      return 'First steps'
+    case 1:
+      return 'Growing team'
+    case 2:
+      return 'Ants are coming'
+    case 3:
+      return 'Ants are here'
+    case 4:
+      return 'Ants are legion'
+    default:
+      return ''
   }
 }
 
 export const checkMushroomsAchievements = (mushrooms: number) => {
   const achievementsStore = useAchievementsStore()
 
-  switch (mushrooms) {
-    case mushroomsThresholds[0]:
-      achievementsStore.unlockAchievement('First mushroom')
-      break
-    case mushroomsThresholds[1]:
-      achievementsStore.unlockAchievement('Mushroom gatherer')
-      break
-    case mushroomsThresholds[2]:
-      achievementsStore.unlockAchievement('Mushroom farmer')
-      break
-    case mushroomsThresholds[3]:
-      achievementsStore.unlockAchievement('Mushroom master')
-      break
-    case mushroomsThresholds[4]:
-      achievementsStore.unlockAchievement('Mycologist')
-      break
+  for (let i = 0; i < thresholds.mushrooms.length; i++) {
+    if (mushrooms >= thresholds.mushrooms[i]) {
+      const achievement = getMushroomAchievement(i)
+      achievementsStore.unlockAchievement(achievement)
+    }
+  }
+}
+
+const getMushroomAchievement = (index: number) => {
+  switch (index) {
+    case 0:
+      return 'First mushroom'
+    case 1:
+      return 'Mushroom gatherer'
+    case 2:
+      return 'Mushroom farmer'
+    case 3:
+      return 'Mushroom master'
+    case 4:
+      return 'Mycologist'
+    default:
+      return ''
   }
 }

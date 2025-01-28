@@ -2,7 +2,7 @@
 import { ref, onMounted, watch } from 'vue'
 import { useLaboratoryStore } from '@/stores/laboratoryStore.ts'
 import { useUnlockedStepStore } from '@/stores/unlockedStepsStore.ts'
-import { useCalculateSideEffectStore } from '@/stores/helpers/calculateSideEffectsStore.ts'
+import { useCalculateSideEffectStore } from '@/stores/utils/calculateSideEffectsStore.ts'
 
 const laboratoryStore = useLaboratoryStore()
 const unlockedStepStore = useUnlockedStepStore()

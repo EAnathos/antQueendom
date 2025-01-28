@@ -4,7 +4,7 @@ import queenImage from '@/assets/queen.png'
 import { useLaboratoryStore } from '@/stores/laboratoryStore.ts'
 import { useUnlockedStepStore } from '@/stores/unlockedStepsStore.ts'
 import { useAntStore } from '@/stores/antStore.ts'
-import { useCalculateSideEffectStore } from '@/stores/helpers/calculateSideEffectsStore.ts'
+import { useCalculateSideEffectStore } from '@/stores/utils/calculateSideEffectsStore.ts'
 import { useAchievementsStore } from '@/stores/achievementsStore.ts'
 
 const laboratoryStore = useLaboratoryStore()
