@@ -5,11 +5,13 @@ import { useLaboratoryStore } from '@/stores/laboratoryStore.ts'
 import { useUnlockedStepStore } from '@/stores/unlockedStepsStore.ts'
 import { useAntStore } from '@/stores/antStore.ts'
 import { useCalculateSideEffectStore } from '@/stores/helpers/calculateSideEffectsStore.ts'
+import { useAchievementsStore } from '@/stores/achievementsStore.ts'
 
 const laboratoryStore = useLaboratoryStore()
 const antStore = useAntStore()
 const unlockedStepStore = useUnlockedStepStore()
 const calculateSideEffectStore = useCalculateSideEffectStore()
+const achievementsStore = useAchievementsStore()
 
 const handleClick = () => {
   antStore.leaves++
@@ -19,6 +21,7 @@ onMounted(() => {
   antStore.loadFromLocalStorage()
   laboratoryStore.loadFromLocalStorage()
   unlockedStepStore.loadFromLocalStorage()
+  achievementsStore.loadFromLocalStorage()
 })
 </script>
 

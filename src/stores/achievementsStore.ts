@@ -96,7 +96,7 @@ export const useAchievementsStore = defineStore('achievements', () => {
     const achievement = achievements.value.find(ach => ach.name === achievementName)
     if (achievement && !achievement.unlocked) {
       achievement.unlocked = true
-      saveToLocalStorage() // Save changes to localStorage after unlocking
+      saveToLocalStorage()
     }
   }
 
@@ -104,6 +104,6 @@ export const useAchievementsStore = defineStore('achievements', () => {
     achievements,
     loadFromLocalStorage,
     saveToLocalStorage,
-    unlockAchievement, // Expose the unlock function
+    unlockAchievement,
   }
 })

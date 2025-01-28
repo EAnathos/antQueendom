@@ -2,6 +2,9 @@ import { computed } from 'vue'
 import { defineStore } from 'pinia'
 import { useLaboratoryStore } from '@/stores/laboratoryStore.ts'
 import { useAntStore } from '@/stores/antStore.ts'
+import {
+  checkMushroomsAchievements,
+} from '@/stores/utils/achievementsUnlocker.ts'
 
 export const useCalculateSideEffectStore = defineStore('calculateSideEffect', () => {
   const laboratoryStore = useLaboratoryStore()
@@ -47,6 +50,7 @@ export const useCalculateSideEffectStore = defineStore('calculateSideEffect', ()
       interval = setInterval(() => {
         laboratoryStore.mushrooms += mushroomsPerSecond.value
         laboratoryStore.saveToLocalStorage()
+        checkMushroomsAchievements(laboratoryStore.mushrooms)
       }, 1000)
     }
   }

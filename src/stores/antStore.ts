@@ -2,7 +2,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { calculateUpgradeCost } from '@/stores/utils/costPrice.ts'
-import { useAchievementsStore } from '@/stores/achievementsStore.ts' // Import du store des achievements
+import { checkWorkersAchievements } from '@/stores/utils/achievementsUnlocker.ts'
 
 export const useAntStore = defineStore('ant', () => {
   const leaves = ref(0)
@@ -12,7 +12,7 @@ export const useAntStore = defineStore('ant', () => {
   const workerPriceMultiplier = 1.2
 
   const workerCost = computed(() => {
-    return calculateUpgradeCost(workerBasePrice, workerPriceMultiplier, workers.value)
+    return calculateUpgradeCost(workerBasePrice, workerPriceMultiplier, workers.value + 1)
   })
 
   const loadFromLocalStorage = () => {
@@ -32,32 +32,12 @@ export const useAntStore = defineStore('ant', () => {
     if (leaves.value >= workerCost.value) {
       leaves.value -= workerCost.value
       workers.value++
-      checkAchievements()
+      checkWorkersAchievements(workers.value)
       saveToLocalStorage()
     }
   }
 
-  const checkAchievements = () => {
-    const achievementsStore = useAchievementsStore()
 
-    switch (workers.value) {
-      case 1:
-        achievementsStore.unlockAchievement('First steps')
-        break
-      case 100:
-        achievementsStore.unlockAchievement('Growing team')
-        break
-      case 10000:
-        achievementsStore.unlockAchievement('Ants are coming')
-        break
-      case 1000000:
-        achievementsStore.unlockAchievement('Ants are here')
-        break
-      case 100000000:
-        achievementsStore.unlockAchievement('Ants are legion')
-        break
-    }
-  }
 
   return {
     leaves,
