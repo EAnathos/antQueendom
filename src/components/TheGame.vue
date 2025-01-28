@@ -4,10 +4,17 @@ import AntClicker from './clickers/AntClicker.vue'
 import LaboratoryClicker from '@/components/clickers/LaboratoryClicker.vue'
 import OffenseClicker from '@/components/clickers/OffenseClicker.vue'
 import DefenseClicker from '@/components/clickers/DefenseClicker.vue'
+import AchievementModal from '@/components/AchievementModal.vue'
 
 const backgroundOffset = ref({ x: 0, y: 0 })
 const isDragging = ref(false)
 const dragStart = ref({ x: 0, y: 0 })
+
+const isAchievementsOpen = ref(false)
+
+const toggleAchievements = () => {
+  isAchievementsOpen.value = !isAchievementsOpen.value
+}
 
 const startDrag = (event: MouseEvent) => {
   isDragging.value = true
@@ -54,13 +61,15 @@ onUnmounted(() => {
 
 <template>
   <div>
-    <!-- Navbar -->
     <nav class="navbar">
-      <button>Achievements</button>
+      <button @click="toggleAchievements">Achievements</button>
       <button @click="resetAccount">Reset</button>
     </nav>
 
-    <!-- Background with draggable functionality -->
+    <div v-if="isAchievementsOpen" class="modal-overlay" @click.self="toggleAchievements">
+      <AchievementModal />
+    </div>
+
     <div
       class="background"
       @mousedown="startDrag"
@@ -69,7 +78,6 @@ onUnmounted(() => {
       <div class="background-layer grass"></div>
       <div class="background-layer stones"></div>
 
-      <!-- Ant Clicker component -->
       <AntClicker
         :style="{
           position: 'absolute',
@@ -80,7 +88,6 @@ onUnmounted(() => {
         }"
       />
 
-      <!-- Laboratory Clicker -->
       <LaboratoryClicker
         :style="{
           position: 'absolute',
@@ -115,25 +122,24 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-/* Navbar Styles */
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  padding: 10px;
+  padding: 15px;
   background-color: #222;
   color: white;
   display: flex;
-  gap: 10px;
+  justify-content: space-between;
   z-index: 10;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .navbar button {
   font-family: inherit;
   font-size: 14px;
-  padding: 5px 15px;
+  padding: 3px 12px;
   background-color: #555;
   color: white;
   border: none;
@@ -144,9 +150,9 @@ onUnmounted(() => {
 
 .navbar button:hover {
   background-color: #777;
+  transform: scale(1.05);
 }
 
-/* Background Styles */
 .background {
   width: 20480px;
   height: 20480px;
@@ -184,9 +190,16 @@ onUnmounted(() => {
   opacity: 0.7;
 }
 
-/* Queen Image Styles */
-.queen {
-  width: 150px;
-  height: auto;
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
 }
 </style>
