@@ -1,6 +1,7 @@
 // stores/antStore.ts
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import { calculateUpgradeCost } from '@/stores/utils/costPrice.ts'
 
 export const useAntStore = defineStore('ant', () => {
   const leaves = ref(0)
@@ -11,7 +12,7 @@ export const useAntStore = defineStore('ant', () => {
 
   // Coût des ouvrières comme propriété calculée
   const workerCost = computed(() => {
-    return Math.ceil(workerBasePrice * Math.pow(workerPriceMultiplier, workers.value))
+    return calculateUpgradeCost(workerBasePrice, workerPriceMultiplier, workers.value)
   })
 
   // Charger depuis le localStorage
