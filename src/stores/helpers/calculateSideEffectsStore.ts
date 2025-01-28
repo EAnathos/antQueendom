@@ -2,9 +2,7 @@ import { computed } from 'vue'
 import { defineStore } from 'pinia'
 import { useLaboratoryStore } from '@/stores/laboratoryStore.ts'
 import { useAntStore } from '@/stores/antStore.ts'
-import {
-  checkMushroomsAchievements,
-} from '@/stores/utils/achievementsUnlocker.ts'
+import { checkMushroomsAchievements } from '@/stores/utils/achievementsUnlocker.ts'
 
 export const useCalculateSideEffectStore = defineStore('calculateSideEffect', () => {
   const laboratoryStore = useLaboratoryStore()

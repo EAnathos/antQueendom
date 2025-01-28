@@ -37,8 +37,6 @@ export const useAntStore = defineStore('ant', () => {
     }
   }
 
-
-
   return {
     leaves,
     workers,
