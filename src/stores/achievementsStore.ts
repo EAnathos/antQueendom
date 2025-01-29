@@ -4,44 +4,45 @@ import { ref } from 'vue'
 
 export const useAchievementsStore = defineStore('achievements', () => {
   const thresholds = ref({
-    workers: [1, 100, 10000, 1000000, 100000000],
+    leaves: [1, 10000, 1000000000, 1000000000000, 1000000000000000],
     mushrooms: [1, 10000, 1000000000, 1000000000000, 1000000000000000],
   })
 
   const achievements = ref([
+    // Leaf-themed achievements
     {
       name: 'First steps',
-      description: 'Recruit your first worker',
+      description: 'Collect your first leaf',
       unlocked: false,
-      theme: 'Workers',
+      theme: 'Leaves',
       tier: 'I',
     },
     {
-      name: 'Growing team',
-      description: 'Recruit' + thresholds.value.workers[1] + 'workers',
+      name: 'Eco-friendly',
+      description: 'Collect ' + thresholds.value.leaves[1] + ' leaves',
       unlocked: false,
-      theme: 'Workers',
+      theme: 'Leaves',
       tier: 'II',
     },
     {
-      name: 'Ants are coming',
-      description: 'Recruit' + thresholds.value.workers[2] + 'workers',
+      name: 'Tree hugger',
+      description: 'Collect ' + thresholds.value.leaves[2].toExponential() + ' leaves',
       unlocked: false,
-      theme: 'Workers',
+      theme: 'Leaves',
       tier: 'III',
     },
     {
-      name: 'Ants are here',
-      description: 'Recruit' + thresholds.value.workers[3] + 'workers',
+      name: 'Forest guardian',
+      description: 'Collect ' + thresholds.value.leaves[3].toExponential() + ' leaves',
       unlocked: false,
-      theme: 'Workers',
+      theme: 'Leaves',
       tier: 'IV',
     },
     {
-      name: 'Ants are legion',
-      description: 'Recruit' + thresholds.value.workers[4] + 'workers',
+      name: 'Mother Nature',
+      description: 'Collect ' + thresholds.value.leaves[4].toExponential() + ' leaves',
       unlocked: false,
-      theme: 'Workers',
+      theme: 'Leaves',
       tier: 'V',
     },
     // Mushroom-themed achievements
@@ -54,28 +55,28 @@ export const useAchievementsStore = defineStore('achievements', () => {
     },
     {
       name: 'Mushroom gatherer',
-      description: 'Collect' + thresholds.value.mushrooms[1] + 'mushrooms',
+      description: 'Collect ' + thresholds.value.mushrooms[1] + ' mushrooms',
       unlocked: false,
       theme: 'Mushrooms',
       tier: 'II',
     },
     {
       name: 'Mushroom farmer',
-      description: 'Collect' + thresholds.value.mushrooms[2] + 'mushrooms',
+      description: 'Collect ' + thresholds.value.mushrooms[2].toExponential() + ' mushrooms',
       unlocked: false,
       theme: 'Mushrooms',
       tier: 'III',
     },
     {
       name: 'Mushroom master',
-      description: 'Collect' + thresholds.value.mushrooms[3] + 'mushrooms',
+      description: 'Collect ' + thresholds.value.mushrooms[3].toExponential() + ' mushrooms',
       unlocked: false,
       theme: 'Mushrooms',
       tier: 'IV',
     },
     {
       name: 'Mycologist',
-      description: 'Collect' + thresholds.value.mushrooms[4] + 'mushrooms',
+      description: 'Collect ' + thresholds.value.mushrooms[4].toExponential() + ' mushrooms',
       unlocked: false,
       theme: 'Mushrooms',
       tier: 'V',

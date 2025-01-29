@@ -1,11 +1,10 @@
 import { useAchievementsStore } from '@/stores/achievementsStore.ts'
 
-export const checkWorkersAchievements = (workers: number) => {
+export const checkLeavesAchievements = (leaves: number) => {
   const achievementsStore = useAchievementsStore()
-  const thresholds = achievementsStore.thresholds
 
-  for (let i = 0; i < thresholds.workers.length; i++) {
-    if (workers >= thresholds.workers[i]) {
+  for (let i = 0; i < achievementsStore.thresholds.leaves.length; i++) {
+    if (leaves >= achievementsStore.thresholds.leaves[i]) {
       const achievement = getWorkerAchievement(i)
       achievementsStore.unlockAchievement(achievement)
     }
@@ -32,8 +31,8 @@ const getWorkerAchievement = (index: number) => {
 export const checkMushroomsAchievements = (mushrooms: number) => {
   const achievementsStore = useAchievementsStore()
 
-  for (let i = 0; i < thresholds.mushrooms.length; i++) {
-    if (mushrooms >= thresholds.mushrooms[i]) {
+  for (let i = 0; i < achievementsStore.thresholds.mushrooms.length; i++) {
+    if (mushrooms >= achievementsStore.thresholds.mushrooms[i]) {
       const achievement = getMushroomAchievement(i)
       achievementsStore.unlockAchievement(achievement)
     }
