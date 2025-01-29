@@ -4,15 +4,18 @@ import { computed } from 'vue'
 
 const achievementsStore = useAchievementsStore()
 const groupedAchievements = computed(() => {
-  return achievementsStore.achievements.reduce((groups, achievement) => {
-    const theme = achievement.theme;
-    if (!groups[theme]) {
-      groups[theme] = [];
-    }
-    groups[theme].push(achievement);
-    return groups;
-  }, {} as Record<string, typeof achievementsStore.achievements>);
-});
+  return achievementsStore.achievements.reduce(
+    (groups, achievement) => {
+      const theme = achievement.theme
+      if (!groups[theme]) {
+        groups[theme] = []
+      }
+      groups[theme].push(achievement)
+      return groups
+    },
+    {} as Record<string, typeof achievementsStore.achievements>,
+  )
+})
 </script>
 
 <template>
@@ -70,7 +73,9 @@ const groupedAchievements = computed(() => {
   padding: 8px;
   margin-top: 2px;
   border-radius: 4px;
-  transition: transform 0.2s ease, background-color 0.3s ease;
+  transition:
+    transform 0.2s ease,
+    background-color 0.3s ease;
   text-align: center;
   position: relative;
 }
@@ -140,5 +145,4 @@ const groupedAchievements = computed(() => {
   align-items: center;
   height: 100%;
 }
-
 </style>

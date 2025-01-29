@@ -3,40 +3,46 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useAchievementsStore = defineStore('achievements', () => {
+  const thresholds = ref({
+    leaves: [1, 10000, 1000000000, 1000000000000, 1000000000000000],
+    mushrooms: [1, 10000, 1000000000, 1000000000000, 1000000000000000],
+  })
+
   const achievements = ref([
+    // Leaf-themed achievements
     {
       name: 'First steps',
-      description: 'Recruit your first worker',
+      description: 'Collect your first leaf',
       unlocked: false,
-      theme: 'Workers',
+      theme: 'Leaves',
       tier: 'I',
     },
     {
-      name: 'Growing team',
-      description: 'Recruit 100 workers',
+      name: 'Eco-friendly',
+      description: 'Collect ' + thresholds.value.leaves[1] + ' leaves',
       unlocked: false,
-      theme: 'Workers',
+      theme: 'Leaves',
       tier: 'II',
     },
     {
-      name: 'Ants are coming',
-      description: 'Recruit 10000 workers',
+      name: 'Tree hugger',
+      description: 'Collect ' + thresholds.value.leaves[2].toExponential() + ' leaves',
       unlocked: false,
-      theme: 'Workers',
+      theme: 'Leaves',
       tier: 'III',
     },
     {
-      name: 'Ants are here',
-      description: 'Recruit 1000000 workers',
+      name: 'Forest guardian',
+      description: 'Collect ' + thresholds.value.leaves[3].toExponential() + ' leaves',
       unlocked: false,
-      theme: 'Workers',
+      theme: 'Leaves',
       tier: 'IV',
     },
     {
-      name: 'Ants are legion',
-      description: 'Recruit 100000000 workers',
+      name: 'Mother Nature',
+      description: 'Collect ' + thresholds.value.leaves[4].toExponential() + ' leaves',
       unlocked: false,
-      theme: 'Workers',
+      theme: 'Leaves',
       tier: 'V',
     },
     // Mushroom-themed achievements
@@ -49,28 +55,28 @@ export const useAchievementsStore = defineStore('achievements', () => {
     },
     {
       name: 'Mushroom gatherer',
-      description: 'Collect 100 mushrooms',
+      description: 'Collect ' + thresholds.value.mushrooms[1] + ' mushrooms',
       unlocked: false,
       theme: 'Mushrooms',
       tier: 'II',
     },
     {
       name: 'Mushroom farmer',
-      description: 'Collect 1000 mushrooms',
+      description: 'Collect ' + thresholds.value.mushrooms[2].toExponential() + ' mushrooms',
       unlocked: false,
       theme: 'Mushrooms',
       tier: 'III',
     },
     {
       name: 'Mushroom master',
-      description: 'Collect 10000 mushrooms',
+      description: 'Collect ' + thresholds.value.mushrooms[3].toExponential() + ' mushrooms',
       unlocked: false,
       theme: 'Mushrooms',
       tier: 'IV',
     },
     {
       name: 'Mycologist',
-      description: 'Collect 100000 mushrooms',
+      description: 'Collect ' + thresholds.value.mushrooms[4].toExponential() + ' mushrooms',
       unlocked: false,
       theme: 'Mushrooms',
       tier: 'V',
@@ -93,7 +99,7 @@ export const useAchievementsStore = defineStore('achievements', () => {
 
   // Unlock an achievement by its name
   const unlockAchievement = (achievementName: string) => {
-    const achievement = achievements.value.find(ach => ach.name === achievementName)
+    const achievement = achievements.value.find((ach) => ach.name === achievementName)
     if (achievement && !achievement.unlocked) {
       achievement.unlocked = true
       saveToLocalStorage()
@@ -102,6 +108,7 @@ export const useAchievementsStore = defineStore('achievements', () => {
 
   return {
     achievements,
+    thresholds,
     loadFromLocalStorage,
     saveToLocalStorage,
     unlockAchievement,

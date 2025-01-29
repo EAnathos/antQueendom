@@ -3,7 +3,8 @@ import { defineStore } from 'pinia'
 import { useLaboratoryStore } from '@/stores/laboratoryStore.ts'
 import { useAntStore } from '@/stores/antStore.ts'
 import {
-  checkMushroomsAchievements,
+  checkLeavesAchievements,
+  checkMushroomsAchievements
 } from '@/stores/utils/achievementsUnlocker.ts'
 
 export const useCalculateSideEffectStore = defineStore('calculateSideEffect', () => {
@@ -28,6 +29,7 @@ export const useCalculateSideEffectStore = defineStore('calculateSideEffect', ()
   const increaseLeaves = () => {
     antStore.leaves += leavesPerSecond.value
     antStore.saveToLocalStorage()
+    checkLeavesAchievements(antStore.leaves)
   }
 
   // Start mushroom production at an interval

@@ -37,9 +37,10 @@ const stopDrag = () => {
 
 const resetAccount = () => {
   if (confirm('Are you sure you want to reset your account? This action cannot be undone.')) {
-    localStorage.clear()
-
-    window.location.reload()
+    setTimeout(() => {
+      localStorage.clear()
+      window.location.reload()
+    }, 0)
   }
 }
 

@@ -29,7 +29,11 @@ export const useLaboratoryStore = defineStore('laboratory', () => {
   const majorWorkerCost = 5000
 
   const mushroomRateUpgradeCost = computed(() => {
-    return calculateUpgradeCost(mushroomRateBasePrice, mushroomRatePriceMultiplier, mushroomRate.value)
+    return calculateUpgradeCost(
+      mushroomRateBasePrice,
+      mushroomRatePriceMultiplier,
+      mushroomRate.value,
+    )
   })
 
   const mushroomEffectUpgradeCost = computed(() =>

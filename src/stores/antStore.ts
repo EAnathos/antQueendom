@@ -2,7 +2,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { calculateUpgradeCost } from '@/stores/utils/costPrice.ts'
-import { checkWorkersAchievements } from '@/stores/utils/achievementsUnlocker.ts'
 
 export const useAntStore = defineStore('ant', () => {
   const leaves = ref(0)
@@ -32,12 +31,9 @@ export const useAntStore = defineStore('ant', () => {
     if (leaves.value >= workerCost.value) {
       leaves.value -= workerCost.value
       workers.value++
-      checkWorkersAchievements(workers.value)
       saveToLocalStorage()
     }
   }
-
-
 
   return {
     leaves,
