@@ -5,8 +5,8 @@ import { useWarStore } from '@/stores/warStore.ts'
 import { useAntStore } from '@/stores/antStore.ts'
 
 const unlockedStepStore = useUnlockedStepStore()
-const antStore = useAntStore()
 const warStore = useWarStore()
+const antStore = useAntStore()
 
 const selectedTier = ref(1)
 
@@ -44,6 +44,16 @@ const attack = () => {
     }, 1000)
   }
 }
+
+const attackProbability = computed(() => Math.min(warStore.probDefense, 100))
+const workersLostOnAttack = computed(() => Math.floor(antStore.workers * 0.1))
+
+const reinforceDefense = () => {
+  if (warStore.foods >= 50 && warStore.probDefense > 0) {
+    warStore.foods -= 50
+    warStore.probDefense = Math.max(warStore.probDefense - 5, 0)
+  }
+}
 </script>
 
 <template>
@@ -51,14 +61,12 @@ const attack = () => {
     <div class="banner">
       <p>Offense</p>
     </div>
-
     <div class="game-panel">
       <div class="attack-controls">
         <button @click="attack" :disabled="!canAttack">
           <span> Attack </span>
           <span> (+{{ selectedAttack.foodGain }} foods, -{{ selectedAttack.workersCost }} workers) </span>
         </button>
-
         <select id="attack-tier" v-model="selectedTier">
           <option v-for="tier in attackTiers" :key="tier.tier" :value="tier.tier">
             Tier {{ tier.tier }}
@@ -66,9 +74,24 @@ const attack = () => {
         </select>
       </div>
     </div>
+
+    <hr class="separator" />
+
+    <div class="banner">
+      <p>Defense</p>
+    </div>
+    <div class="game-panel">
+      <p class="resource-display">Attack probability : {{ attackProbability }}%</p>
+      <p class="resource-display">Workers lost on attack : {{ workersLostOnAttack }}</p>
+      <div class="defense-controls">
+        <button @click="reinforceDefense" :disabled="warStore.foods < 50 || warStore.probDefense === 0">
+          <span> Reinforce defense </span>
+          <span> (50 foods) (-5% attack probability) </span>
+        </button>
+      </div>
+    </div>
   </div>
 </template>
-
 
 <style scoped>
 @import '../../assets/clicker.css';
@@ -98,11 +121,22 @@ const attack = () => {
 
 .banner {
   background-color: #800000;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: white;
 }
 
-.attack-controls {
+.separator {
+  margin: 20px 0;
+  border: none;
+  border-top: 2px solid #800000;
+}
+
+.attack-controls, .defense-controls {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
   margin-top: 10px;
 }
@@ -116,6 +150,6 @@ select {
   border-radius: 4px;
   cursor: pointer;
   background-color: #d3d3d3;
+  margin-left: auto;
 }
 </style>
-

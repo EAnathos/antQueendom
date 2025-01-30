@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import AntClicker from './clickers/AntClicker.vue'
-import LaboratoryClicker from '@/components/clickers/LaboratoryClicker.vue'
-import OffenseClicker from '@/components/clickers/OffenseClicker.vue'
+import LaboratoryClicker from '@/components/clickers/Laboratory.vue'
+import OffenseClicker from '@/components/clickers/AttackAndDefense.vue'
 import DefenseClicker from '@/components/clickers/DefenseClicker.vue'
 import AchievementModal from '@/components/AchievementModal.vue'
-import FoodClicker from '@/components/clickers/FoodClicker.vue'
+import FoodClicker from '@/components/clickers/FoodUpgrades.vue'
 
 const backgroundOffset = ref({ x: 0, y: 0 })
 const isDragging = ref(false)
@@ -105,17 +105,7 @@ onUnmounted(() => {
           position: 'absolute',
           top: '50%',
           left: '50%',
-          transform: 'translate(200px, -500px)',
-          zIndex: 3,
-        }"
-      />
-
-      <DefenseClicker
-        :style="{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(200px, -320px)',
+          transform: 'translate(200px, -520px)',
           zIndex: 3,
         }"
       />
@@ -125,7 +115,7 @@ onUnmounted(() => {
           position: 'absolute',
           top: '50%',
           left: '50%',
-          transform: 'translate(620px, -320px)',
+          transform: 'translate(620px, -520px)',
           zIndex: 3,
         }"
       />
