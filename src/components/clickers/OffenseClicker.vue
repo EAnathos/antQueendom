@@ -27,17 +27,27 @@ const selectedAttack = computed(() => {
   return attackTiers.find(a => a.tier === selectedTier.value) || { foodGain: 0, workersCost: 0, tier: 0 }
 })
 
+const isAttacked = ref(false)
 const attack = () => {
   if (canAttack.value) {
     antStore.workers -= selectedAttack.value.workersCost
     warStore.foods += selectedAttack.value.foodGain
     warStore.probDefense += selectedAttack.value.tier
   }
+
+  if (Math.random() * 100 < warStore.probDefense) {
+    warStore.probDefense = 0
+    antStore.workers -= Math.floor(antStore.workers * 0.1)
+    isAttacked.value = true
+    setTimeout(() => {
+      isAttacked.value = false
+    }, 1000)
+  }
 }
 </script>
 
 <template>
-  <div v-if="unlockedStepStore.offenseAndDefenseUnlocked" class="game-container">
+  <div v-if="unlockedStepStore.offenseAndDefenseUnlocked" class="game-container" :class="{ attacked: isAttacked }">
     <div class="banner">
       <p>Offense</p>
     </div>
@@ -71,11 +81,31 @@ const attack = () => {
   </div>
 </template>
 
+
 <style scoped>
 @import '../../assets/clicker.css';
 
 .game-container {
   width: 400px;
+  transition: transform 0.2s ease;
+}
+
+.game-container.attacked {
+  animation: shake 0.5s ease-out, flash 0.5s ease-out;
+}
+
+@keyframes shake {
+  0% { transform: translate(200px, -405px); }
+  25% { transform: translate(205px, -400px); }
+  50% { transform: translate(200px, -405px); }
+  75% { transform: translate(195px, -400px); }
+  100% { transform: translate(200px, -405px); }
+}
+
+@keyframes flash {
+  0% { background-color: transparent; }
+  50% { background-color: rgba(255, 0, 0, 0.5); }
+  100% { background-color: transparent; }
 }
 
 .banner {
@@ -97,5 +127,7 @@ select {
   padding: 5px;
   border-radius: 4px;
   cursor: pointer;
+  background-color: #d3d3d3;
 }
 </style>
+
