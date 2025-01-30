@@ -53,18 +53,6 @@ const attack = () => {
     </div>
 
     <div class="game-panel">
-      <p class="resource-display">
-        You have
-        {{
-          warStore.foods > 1000000
-            ? warStore.foods.toExponential(2)
-            : warStore.foods > 1000
-              ? Math.round(warStore.foods)
-              : warStore.foods
-        }}
-        foods
-      </p>
-
       <div class="attack-controls">
         <button @click="attack" :disabled="!canAttack">
           <span> Attack </span>
@@ -109,7 +97,7 @@ const attack = () => {
 }
 
 .banner {
-  background-color: #800013;
+  background-color: #800000;
 }
 
 .attack-controls {

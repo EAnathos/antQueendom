@@ -5,6 +5,7 @@ import LaboratoryClicker from '@/components/clickers/LaboratoryClicker.vue'
 import OffenseClicker from '@/components/clickers/OffenseClicker.vue'
 import DefenseClicker from '@/components/clickers/DefenseClicker.vue'
 import AchievementModal from '@/components/AchievementModal.vue'
+import FoodClicker from '@/components/clickers/FoodClicker.vue'
 
 const backgroundOffset = ref({ x: 0, y: 0 })
 const isDragging = ref(false)
@@ -104,7 +105,7 @@ onUnmounted(() => {
           position: 'absolute',
           top: '50%',
           left: '50%',
-          transform: 'translate(200px, -400px)',
+          transform: 'translate(200px, -500px)',
           zIndex: 3,
         }"
       />
@@ -114,7 +115,17 @@ onUnmounted(() => {
           position: 'absolute',
           top: '50%',
           left: '50%',
-          transform: 'translate(700px, -400px)',
+          transform: 'translate(200px, -320px)',
+          zIndex: 3,
+        }"
+      />
+
+      <FoodClicker
+        :style="{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(620px, -320px)',
           zIndex: 3,
         }"
       />

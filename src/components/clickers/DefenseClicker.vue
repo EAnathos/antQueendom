@@ -54,7 +54,7 @@ const reinforceDefense = () => {
 }
 
 .banner {
-  background-color: #008075;
+  background-color: #800000;
 }
 
 .defense-controls {
