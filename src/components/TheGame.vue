@@ -94,7 +94,7 @@ onUnmounted(() => {
           position: 'absolute',
           top: '50%',
           left: '50%',
-          transform: 'translate(-50px, 50px)',
+          transform: 'translate(-50px, -100px)',
           zIndex: 3,
         }"
       />
@@ -104,7 +104,7 @@ onUnmounted(() => {
           position: 'absolute',
           top: '50%',
           left: '50%',
-          transform: 'translate(200px, -250px)',
+          transform: 'translate(200px, -400px)',
           zIndex: 3,
         }"
       />
@@ -114,7 +114,7 @@ onUnmounted(() => {
           position: 'absolute',
           top: '50%',
           left: '50%',
-          transform: 'translate(700px, -250px)',
+          transform: 'translate(700px, -400px)',
           zIndex: 3,
         }"
       />
